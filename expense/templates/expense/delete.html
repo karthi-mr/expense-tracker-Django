@@ -1,0 +1,17 @@
+{% extends "expense/base.html" %}
+
+{% block title %}Add Expense{% endblock title %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="text-center mb-3 text-uppercase text-primary opacity-50">Add Expense</h1>
+    <form action="" method="post" class="w-50 mx-auto shadow-lg p-5 delete-expense-form text-center">
+        {% csrf_token %}
+        <p>Are you sure want to delete {{ expense.name }} expense?</p>
+        <div class="buttons text-center">
+        <button type="submit" class="btn btn-danger w-25">Yes, Delete</button>
+        <a href="{% url 'index' %}" class="btn btn-warning w-25" role="button">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock body %}

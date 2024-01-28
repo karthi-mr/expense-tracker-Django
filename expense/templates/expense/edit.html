@@ -1,0 +1,29 @@
+{% extends "expense/base.html" %}
+
+{% block title %}Edit Expense{% endblock title %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="text-center mb-3 text-uppercase text-primary opacity-50">Edit Expense</h1>
+    <form action="" method="post" class="w-50 mx-auto shadow-lg p-5 edit-expense-form">
+        {% csrf_token %}
+        <!-- expense name -->
+        <div class="mb-3">
+            <label for="id_name" class="form-label fw-bold">Expense Name</label>
+            {{ expense_form.name }}
+        </div>
+        <!-- expense amount -->
+        <div class="mb-3">
+            <label for="id_amount" class="form-label fw-bold">Expense Amount</label>
+            {{ expense_form.amount }}
+        </div>
+        <!-- expense category -->
+        <div class="mb-3">
+            <label for="id_category" class="form-label fw-bold">Expense Category</label>
+            {{ expense_form.category }}
+        </div>
+        <button type="submit" class="btn btn-success">Update Expense</button>
+        <a href="{% url 'index' %}" class="btn btn-warning" role="button">Cancel</a>
+    </form>
+</div>
+{% endblock body %}

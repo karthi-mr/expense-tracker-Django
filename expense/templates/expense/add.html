@@ -1,0 +1,29 @@
+{% extends "expense/base.html" %}
+
+{% block title %}Add Expense{% endblock title %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="text-center mb-3 text-uppercase text-primary opacity-50">Add Expense</h1>
+    <form action="{% url 'add-expense' %}" method="post" class="w-50 mx-auto shadow-lg p-5 add-expense-form">
+        {% csrf_token %}
+        <!-- expense name -->
+        <div class="mb-3">
+            <label for="id_name" class="form-label fw-bold">Expense Name</label>
+            {{ expense_form.name }}
+        </div>
+        <!-- expense amount -->
+        <div class="mb-3">
+            <label for="id_amount" class="form-label fw-bold">Expense Amount</label>
+            {{ expense_form.amount }}
+        </div>
+        <!-- expense category -->
+        <div class="mb-3">
+            <label for="id_category" class="form-label fw-bold">Expense Category</label>
+            {{ expense_form.category }}
+        </div>
+        <button type="submit" class="btn btn-success">Add Expense</button>
+        <a href="{% url 'index' %}" class="btn btn-warning" role="button">Cancel</a>
+    </form>
+</div>
+{% endblock body %}

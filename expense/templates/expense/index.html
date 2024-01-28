@@ -1,7 +1,42 @@
 {% extends 'expense/base.html' %}
+{% load static %}
 
-{% block title %}Index{% endblock title %}
+{% block title %}Expense Tracker{% endblock title %}
 
 {% block body %}
-<h1>Hello, this is from django index page</h1>
+<div class="add-expense mx-5 my-3">
+    <a href="{% url 'add-expense' %}" class="btn btn-primary" role="button">Add Expense</a>
+</div>
+<div class="my-expense mx-5">
+    <h1>My Expenses</h1>
+    <div class=" shadow-lg p-3">
+        <table class="table table-bordered text-center table-responsive table-striped table-hover align-middle">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Added on</th>
+                    <th scope="col">Edited on</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                {% for expense in expenses %}
+                <tr class="item-row p-5">
+                    <td>{{ expense.name }}</td>
+                    <td>${{ expense.amount }}</td>
+                    <td>{{ expense.added }}</td>
+                    <td>{{ expense.edited }}</td>
+                    <td>{{ expense.category }}</td>
+                    <td><a href="{% url 'edit-expense' expense.id %}"><img src="{% static 'image/edit.png' %}" alt="edit" class="expense-action"></a></td>
+                    <td><a href="{% url 'delete-expense' expense.id %}"><img src="{% static 'image/delete.png' %}" alt="edit" class="expense-action"></a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 {% endblock body %}

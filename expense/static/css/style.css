@@ -6,3 +6,17 @@
   font-weight: bold;
   font-size: 1.5rem;
 }
+
+.item-row {
+  padding: 2rem 0 !important;
+}
+
+.expense-action {
+  height: 2rem;
+}
+
+.add-expense-form input:focus,
+.edit-expense-form input:focus {
+  outline: none;
+  box-shadow: none;
+}
