@@ -4,7 +4,7 @@
 
 {% block body %}
 <div class="container mt-5">
-    <h1 class="text-center mb-3 text-uppercase text-primary opacity-50">Add Expense</h1>
+    <h1 class="text-center mb-3 text-uppercase text-danger opacity-50">Delete Expense</h1>
     <form action="" method="post" class="w-50 mx-auto shadow-lg p-5 delete-expense-form text-center">
         {% csrf_token %}
         <p>Are you sure want to delete {{ expense.name }} expense?</p>

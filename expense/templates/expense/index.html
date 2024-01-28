@@ -1,5 +1,6 @@
 {% extends 'expense/base.html' %}
 {% load static %}
+{% load humanize %}
 
 {% block title %}Expense Tracker{% endblock title %}
 
@@ -26,17 +27,44 @@
                 {% for expense in expenses %}
                 <tr class="item-row p-5">
                     <td>{{ expense.name }}</td>
-                    <td>${{ expense.amount }}</td>
+                    <td>${{ expense.amount| intcomma }}</td>
                     <td>{{ expense.added }}</td>
                     <td>{{ expense.edited }}</td>
                     <td>{{ expense.category }}</td>
-                    <td><a href="{% url 'edit-expense' expense.id %}"><img src="{% static 'image/edit.png' %}" alt="edit" class="expense-action"></a></td>
-                    <td><a href="{% url 'delete-expense' expense.id %}"><img src="{% static 'image/delete.png' %}" alt="edit" class="expense-action"></a>
+                    <td>
+                        <a href="{% url 'edit-expense' expense.id %}">
+                            <img src="{% static 'image/edit.png' %}" alt="edit" class="expense-action">
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{% url 'delete-expense' expense.id %}">
+                            <img src="{% static 'image/delete.png' %}" alt="edit" class="expense-action">
+                        </a>
                     </td>
                 </tr>
                 {% endfor %}
+                <tr>
+                    <td colspan="7" class="text-end">
+                        <h3>Total : <span class="text-success">${{ total_expenses| intcomma }}</span></h3>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>
 </div>
+<div class="last-days-calculate mx-5 row my-3 gap-3">
+    <div class="shadow-lg col p-4">
+        <h3 class="text-primary opacity-50">Last 365 days</h3>
+        <h4 class="text-success">${{ yearly_sum| intcomma }}</h4>
+    </div>
+    <div class="shadow-lg col p-4">
+        <h3 class="text-primary opacity-50">Last 30 days</h3>
+        <h4 class="text-success">${{ monthly_sum| intcomma }}</h4>
+    </div>
+    <div class="shadow-lg col p-4">
+        <h3 class="text-primary opacity-50">Last 7 days</h3>
+        <h4 class="text-success">${{ weekly_sum| intcomma }}</h4>
+    </div>
+</div>
+
 {% endblock body %}
