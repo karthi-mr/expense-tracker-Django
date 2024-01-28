@@ -20,3 +20,25 @@
   outline: none;
   box-shadow: none;
 }
+
+.past-30-day-table .added-on,
+.categorical-table .added-on {
+  display: block;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.past-30-day-table .added-on-amount,
+.categorical-table .added-on-amount {
+  display: block;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: forestgreen;
+}
+
+.past-30-days .heading,
+.categorical-sum .heading {
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: purple;
+}

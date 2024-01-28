@@ -11,7 +11,7 @@ from expense.models import Expense
 def index(request):
     expenses = Expense.objects.order_by("-edited")
     totalExpenses = Expense.objects.aggregate(Sum("amount"))
-    
+
     # ! calculating last 365 days expense
     lastYear = datetime.date.today() - datetime.timedelta(days=365)
     data = Expense.objects.filter(added__gt=lastYear)
@@ -27,12 +27,30 @@ def index(request):
     data = Expense.objects.filter(added__gt=lastWeek)
     weeklySum = data.aggregate(Sum("amount"))
 
+    # ! calculating past 30 days sum expenses
+    dailySum = (
+        Expense.objects.filter(edited__gt=lastMonth)
+        .values('edited')
+        .order_by('-edited')
+        .annotate(sum=Sum('amount'))
+    )
+
+    # ! calculating categorical sum expenses
+    categoricalSum = (
+        Expense.objects.all()
+        .values('category')
+        .order_by('category')
+        .annotate(sum=Sum('amount'))
+    )
+
     context = {
         "expenses": expenses,
-        "total_expenses": f"{round(totalExpenses.get("amount__sum"), 2)}",
-        "yearly_sum": f"{round(yearlySum.get("amount__sum"), 2)}",
-        "monthly_sum": f"{round(monthlySum.get("amount__sum"), 2)}",
-        "weekly_sum": f"{round(weeklySum.get("amount__sum"), 2)}",
+        "total_expenses": totalExpenses.get("amount__sum"),
+        "yearly_sum": yearlySum.get("amount__sum"),
+        "monthly_sum": monthlySum.get("amount__sum"),
+        "weekly_sum": weeklySum.get("amount__sum"),
+        "daily_sums": dailySum,
+        "category_sums": categoricalSum,
     }
     return render(request, "expense/index.html", context)
 

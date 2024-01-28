@@ -11,7 +11,7 @@
 <div class="my-expense mx-5">
     <h1>My Expenses</h1>
     <div class=" shadow-lg p-3">
-        <table class="table table-bordered text-center table-responsive table-striped table-hover align-middle">
+        <table class="table table-borderless text-center table-responsive table-striped table-hover align-middle">
             <thead>
                 <tr>
                     <th scope="col">Name</th>
@@ -45,25 +45,53 @@
                 {% endfor %}
                 <tr>
                     <td colspan="7" class="text-end">
-                        <h3>Total : <span class="text-success">${{ total_expenses| intcomma }}</span></h3>
+                        <h3>
+                            Total : <span class="text-success">${{ total_expenses| floatformat:2| intcomma }}</span>
+                        </h3>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
 </div>
+
+<!-- last 365, last 30, last 7 days calculation -->
 <div class="last-days-calculate mx-5 row my-3 gap-3">
     <div class="shadow-lg col p-4">
         <h3 class="text-primary opacity-50">Last 365 days</h3>
-        <h4 class="text-success">${{ yearly_sum| intcomma }}</h4>
+        <h4 class="text-success">${{ yearly_sum| floatformat:2| intcomma }}</h4>
     </div>
     <div class="shadow-lg col p-4">
         <h3 class="text-primary opacity-50">Last 30 days</h3>
-        <h4 class="text-success">${{ monthly_sum| intcomma }}</h4>
+        <h4 class="text-success">${{ monthly_sum| floatformat:2| intcomma }}</h4>
     </div>
     <div class="shadow-lg col p-4">
         <h3 class="text-primary opacity-50">Last 7 days</h3>
-        <h4 class="text-success">${{ weekly_sum| intcomma }}</h4>
+        <h4 class="text-success">${{ weekly_sum| intcomma| floatformat:2 }}</h4>
+    </div>
+</div>
+
+<!-- past 30 days sum expense & categorical sum expense -->
+<div class="past-30-days-categorical-sum mx-5 row my-3 gap-3">
+    <div class="shadow-lg col p-4 past-30-days">
+        <span class="heading d-block p-3 text-center">Past 30 days sum expense</span>
+        <hr>
+        <div class="past-30-day-table">
+            {% for daily_sum in daily_sums %}
+            <span class="mb-2 added-on">{{ daily_sum.edited }}</span>
+            <span class="mb-2 added-on-amount">$ {{ daily_sum.sum| floatformat:2| intcomma }}</span>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="shadow-lg col p-4 categorical-sum">
+        <span class="heading d-block p-3 text-center">Categorical sum expense</span>
+        <hr>
+        <div class="categorical-table">
+            {% for category_sum in category_sums %}
+            <span class="mb-2 added-on">{{ category_sum.category }}</span>
+            <span class="mb-2 added-on-amount">$ {{ category_sum.sum| floatformat:2| intcomma }}</span>
+            {% endfor %}
+        </div>
     </div>
 </div>
 
