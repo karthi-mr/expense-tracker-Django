@@ -10,110 +10,120 @@
     <a href="{% url 'add-expense' %}" class="btn btn-primary" role="button">Add Expense</a>
     <a href="{% url 'category-index' %}" class="btn btn-dark" role="button">Manage Category</a>
 </div>
-<div class="my-expense mx-5">
-    <h1>My Expenses</h1>
-    <div class=" shadow-lg p-3">
-        <table class="table table-borderless text-center table-responsive table-striped table-hover align-middle">
-            <thead class="table-dark">
-                <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Amount</th>
-                    <th scope="col">Added on</th>
-                    <th scope="col">Edited on</th>
-                    <th scope="col">Category</th>
-                    <th scope="col">Edit</th>
-                    <th scope="col">Delete</th>
-                </tr>
-            </thead>
-            <tbody class="table-group-divider">
-                {% for expense in expenses %}
-                <tr class="item-row p-5">
-                    <td>{{ expense.name }}</td>
-                    <td>${{ expense.amount| intcomma }}</td>
-                    <td>{{ expense.added }}</td>
-                    <td>{{ expense.edited }}</td>
-                    <td>{{ expense.category }}</td>
-                    <td>
-                        <a href="{% url 'edit-expense' expense.id %}">
-                            <img src="{% static 'image/edit.png' %}" alt="edit" class="expense-action">
-                        </a>
-                    </td>
-                    <td>
-                        <a href="{% url 'delete-expense' expense.id %}">
-                            <img src="{% static 'image/delete.png' %}" alt="edit" class="expense-action">
-                        </a>
-                    </td>
-                </tr>
+
+<div class="expense-data">
+    {% if expenses.count == 0 %}
+    <div class="no-expense shadow-lg mx-5 p-5 text-center ">
+        <p class="text-danger fw-bold fs-2">No expense found. Please add some expenses to show.</p>
+    </div>
+    {% else %}
+    <div class="my-expense mx-5">
+        <h1>My Expenses</h1>
+        <div class=" shadow-lg p-3">
+            <table class="table table-borderless text-center table-responsive table-striped table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Added on</th>
+                        <th scope="col">Edited on</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Edit</th>
+                        <th scope="col">Delete</th>
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                    {% for expense in expenses %}
+                    <tr class="item-row p-5">
+                        <td>{{ expense.name }}</td>
+                        <td>${{ expense.amount| intcomma }}</td>
+                        <td>{{ expense.added }}</td>
+                        <td>{{ expense.edited }}</td>
+                        <td>{{ expense.category }}</td>
+                        <td>
+                            <a href="{% url 'edit-expense' expense.id %}">
+                                <img src="{% static 'image/edit.png' %}" alt="edit" class="expense-action">
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{% url 'delete-expense' expense.id %}">
+                                <img src="{% static 'image/delete.png' %}" alt="edit" class="expense-action">
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                        <td colspan="7" class="text-end">
+                            <h3>
+                                Total : <span class="text-success">${{ total_expenses| floatformat:2| intcomma }}</span>
+                            </h3>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- last 365, last 30, last 7 days calculation -->
+    <div class="last-days-calculate mx-5 row my-3 gap-3">
+        <div class="shadow-lg col p-4">
+            <h3 class="text-primary opacity-50">Last 365 days</h3>
+            <h4 class="text-success">${{ yearly_sum| floatformat:2| intcomma }}</h4>
+        </div>
+        <div class="shadow-lg col p-4">
+            <h3 class="text-primary opacity-50">Last 30 days</h3>
+            <h4 class="text-success">${{ monthly_sum| floatformat:2| intcomma }}</h4>
+        </div>
+        <div class="shadow-lg col p-4">
+            <h3 class="text-primary opacity-50">Last 7 days</h3>
+            <h4 class="text-success">${{ weekly_sum| floatformat:2| intcomma }}</h4>
+        </div>
+    </div>
+
+    <!-- past 30 days sum expense & categorical sum expense -->
+    <div class="past-30-days-categorical-sum mx-5 row my-3 gap-3">
+        <div class="shadow-lg col p-4 past-30-days">
+            <span class="heading d-block p-3 text-center">Past 30 days sum expense</span>
+            <!-- <hr> -->
+            <div class="past-30-day-table" id="past-30-day-table">
+                {% for daily_sum in daily_sums %}
+                <div>
+                    <span class="mb-2 added-on">{{ daily_sum.added }}</span>
+                </div>
+                <div>
+                    <span class="mb-2 added-on-amount">$ {{ daily_sum.sum| floatformat:2| intcomma }}</span>
+                </div>
                 {% endfor %}
-                <tr>
-                    <td colspan="7" class="text-end">
-                        <h3>
-                            Total : <span class="text-success">${{ total_expenses| floatformat:2| intcomma }}</span>
-                        </h3>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<!-- last 365, last 30, last 7 days calculation -->
-<div class="last-days-calculate mx-5 row my-3 gap-3">
-    <div class="shadow-lg col p-4">
-        <h3 class="text-primary opacity-50">Last 365 days</h3>
-        <h4 class="text-success">${{ yearly_sum| floatformat:2| intcomma }}</h4>
-    </div>
-    <div class="shadow-lg col p-4">
-        <h3 class="text-primary opacity-50">Last 30 days</h3>
-        <h4 class="text-success">${{ monthly_sum| floatformat:2| intcomma }}</h4>
-    </div>
-    <div class="shadow-lg col p-4">
-        <h3 class="text-primary opacity-50">Last 7 days</h3>
-        <h4 class="text-success">${{ weekly_sum| floatformat:2| intcomma }}</h4>
-    </div>
-</div>
-
-<!-- past 30 days sum expense & categorical sum expense -->
-<div class="past-30-days-categorical-sum mx-5 row my-3 gap-3">
-    <div class="shadow-lg col p-4 past-30-days">
-        <span class="heading d-block p-3 text-center">Past 30 days sum expense</span>
-        <!-- <hr> -->
-        <div class="past-30-day-table" id="past-30-day-table">
-            {% for daily_sum in daily_sums %}
-            <div>
-                <span class="mb-2 added-on">{{ daily_sum.added }}</span>
             </div>
-            <div>
-                <span class="mb-2 added-on-amount">$ {{ daily_sum.sum| floatformat:2| intcomma }}</span>
+        </div>
+        <div class="shadow-lg col p-4 categorical-sum">
+            <span class="heading d-block p-1 text-center">Categorical sum expense</span>
+            <div class="categorical-table" id="categorical-table">
+                {% for category_sum in category_sums %}
+                <div>
+                    <span class="mb-2 added-on">{{ category_sum.category__name }}</span>
+                </div>
+                <div>
+                    <span class="mb-2 added-on-amount">$ {{ category_sum.sum| floatformat:2| intcomma }}</span>
+                </div>
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
     </div>
-    <div class="shadow-lg col p-4 categorical-sum">
-        <span class="heading d-block p-1 text-center">Categorical sum expense</span>
-        <div class="categorical-table" id="categorical-table">
-            {% for category_sum in category_sums %}
-            <div>
-                <span class="mb-2 added-on">{{ category_sum.category__name }}</span>
-            </div>
-            <div>
-                <span class="mb-2 added-on-amount">$ {{ category_sum.sum| floatformat:2| intcomma }}</span>
-            </div>
-            {% endfor %}
+
+    <!-- charts -->
+    <div class="row gap-3 mx-5 mt-3 mb-5 chart-row">
+        <div class="col shadow-lg daily-expense-sum p-3">
+            <h2 class="text-center text-success opacity-50 text-capitalize">Daily expense sum</h2>
+            <canvas id="daily-expense" class=""></canvas>
+        </div>
+        <div class="col shadow-lg category-expense-sum p-3">
+            <h2 class="text-center text-success opacity-50 text-capitalize">Expense accross categories</h2>
+            <canvas id="expense-category" class=""></canvas>
         </div>
     </div>
-</div>
+    {% endif %}
 
-<!-- charts -->
-<div class="row gap-3 mx-5 mt-3 mb-5 chart-row">
-    <div class="col shadow-lg daily-expense-sum p-3">
-        <h2 class="text-center text-success opacity-50 text-capitalize">Daily expense sum</h2>
-        <canvas id="daily-expense" class=""></canvas>
-    </div>
-    <div class="col shadow-lg category-expense-sum p-3">
-        <h2 class="text-center text-success opacity-50 text-capitalize">Expense accross categories</h2>
-        <canvas id="expense-category" class=""></canvas>
-    </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.2/dist/chart.min.js"></script>
