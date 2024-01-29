@@ -41,10 +41,17 @@
 .past-30-days .heading,
 .categorical-sum .heading {
   font-weight: bold;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   color: purple;
 }
 
 .chart-row .category-expense-sum #expense-category {
   max-height: 25rem;
+}
+
+.past-30-days-categorical-sum .past-30-days,
+.past-30-days-categorical-sum .categorical-sum {
+  max-height: 30rem;
+  overflow: auto;
+  background-color: floralwhite;
 }

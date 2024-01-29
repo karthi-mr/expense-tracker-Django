@@ -7,6 +7,7 @@
 {% block body %}
 <div class="add-expense mx-5 my-3">
     <a href="{% url 'add-expense' %}" class="btn btn-primary" role="button">Add Expense</a>
+    <a href="{% url 'category-index' %}" class="btn btn-dark" role="button">Manage Category</a>
 </div>
 <div class="my-expense mx-5">
     <h1>My Expenses</h1>
@@ -75,7 +76,7 @@
 <div class="past-30-days-categorical-sum mx-5 row my-3 gap-3">
     <div class="shadow-lg col p-4 past-30-days">
         <span class="heading d-block p-3 text-center">Past 30 days sum expense</span>
-        <hr>
+        <!-- <hr> -->
         <div class="past-30-day-table" id="past-30-day-table">
             {% for daily_sum in daily_sums %}
             <div>
@@ -88,8 +89,7 @@
         </div>
     </div>
     <div class="shadow-lg col p-4 categorical-sum">
-        <span class="heading d-block p-3 text-center">Categorical sum expense</span>
-        <hr>
+        <span class="heading d-block p-1 text-center">Categorical sum expense</span>
         <div class="categorical-table" id="categorical-table">
             {% for category_sum in category_sums %}
             <div>
