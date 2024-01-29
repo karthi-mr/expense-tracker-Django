@@ -1,5 +1,6 @@
 import datetime
 
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q, Sum
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
@@ -9,9 +10,12 @@ from expense.models import Category, Expense
 
 
 def home(request):
+    if request.user.is_authenticated:
+        return redirect(reverse('index'))
     return render(request, "expense/home.html", {})
 
 
+@login_required
 def index(request):
     expenses = Expense.objects.filter(user=request.user).order_by("-edited")
     totalExpenses = expenses.aggregate(Sum("amount"))
@@ -59,6 +63,7 @@ def index(request):
     return render(request, "expense/index.html", context)
 
 
+@login_required
 def add_expense(request):
     if request.method == "POST":
         expenseForm = ExpenseForm(request.user, request.POST)
@@ -71,6 +76,7 @@ def add_expense(request):
     return render(request, "expense/add.html", {"expense_form": expenseForm})
 
 
+@login_required
 def edit_expense(request, expenseId):
     expense = get_object_or_404(Expense, pk=expenseId)
     if request.method == "POST":
@@ -82,6 +88,7 @@ def edit_expense(request, expenseId):
     return render(request, "expense/edit.html", {"expense_form": expenseForm})
 
 
+@login_required
 def delete_expense(request, expenseId):
     expense = get_object_or_404(Expense, pk=expenseId)
     if request.method == "POST":
@@ -90,11 +97,13 @@ def delete_expense(request, expenseId):
     return render(request, "expense/delete.html", {"expense": expense})
 
 
+@login_required
 def category_index(request):
     categories = Category.objects.filter(Q(user=request.user) | Q(user__id=1))
     return render(request, "expense/category-index.html", {"categories": categories})
 
 
+@login_required
 def add_category(request):
     if request.method == "POST":
         categoryForm = CategoryForm(request.POST)
@@ -107,6 +116,7 @@ def add_category(request):
     return render(request, "expense/category-add.html", {"category_form": categoryForm})
 
 
+@login_required
 def edit_category(request, categoryId):
     category = get_object_or_404(Category, pk=categoryId)
     if request.method == "POST":
@@ -120,6 +130,7 @@ def edit_category(request, categoryId):
     )
 
 
+@login_required
 def delete_category(request, categoryId):
     category = get_object_or_404(Category, pk=categoryId)
     if request.method == "POST":
