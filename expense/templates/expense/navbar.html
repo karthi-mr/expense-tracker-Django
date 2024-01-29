@@ -5,5 +5,20 @@
             <img src="{% static 'image/logo.png' %}" alt="expense-img" class="navbar-img">
             <span class="navbar-title ms-4">Expense Tracker</span>
         </a>
+        {% if user.is_authenticated %}
+        <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#myProfile" role="button">
+            My Profile
+        </a>
+        {% endif %}
     </div>
 </nav>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="myProfile">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasExampleLabel">Welcome {{ user.username }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body text-center">
+        <a href="{% url 'user-logout' %}" class="btn btn-outline-danger w-75" role="button">Logout</a>
+    </div>
+</div>
