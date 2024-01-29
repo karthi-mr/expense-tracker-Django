@@ -1,0 +1,54 @@
+{% extends "expense/base.html" %}
+
+{% block title %}User Login{% endblock title %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="text-uppercase mb-3 text-center text-primary opacity-50">Welcome to our expense tracker site</h1>
+    <div class="alert alert-danger">
+        <p class="fw-bold">Invalid Password</p>
+    </div>
+    <form action="" method="post" class="w-50 mx-auto shadow-lg px-5 pt-4 pb-2 add-expense-form">
+        {% csrf_token %}
+        <!-- first_name -->
+        <div class="mb-3">
+            <label for="id_first_name" class="form-label fw-bold">First Name</label>
+            {{ form.first_name }}
+        </div>
+        <!-- last_name -->
+        <div class="mb-3">
+            <label for="id_last_name" class="form-label fw-bold">Last Name</label>
+            {{ form.last_name }}
+        </div>
+        <!-- username -->
+        <div class="mb-3">
+            <label for="id_username" class="form-label fw-bold">Username</label>
+            {{ form.username }}
+        </div>
+        <!-- email -->
+        <div class="mb-3">
+            <label for="id_email" class="form-label fw-bold">Email</label>
+            {{ form.email }}
+        </div>
+        <!-- password -->
+        <div class="mb-3">
+            <label for="id_password" class="form-label fw-bold">Password</label>
+            {{ form.password }}
+        </div>
+        <!-- password2 -->
+        <div class="mb-3">
+            <label for="id_password2" class="form-label fw-bold">Confirm Password</label>
+            {{ form.password2 }}
+        </div>
+        <div class="register-btn text-center">
+            <button type="submit" class="btn btn-success w-75">Register</button>
+        </div>
+        <div class="already-account mt-3">
+            <span>
+                Already have an account?
+                <a href="{% url 'user-login' %}" class="link-primary">Click here to login</a>
+            </span>
+        </div>
+    </form>
+</div>
+{% endblock body %}

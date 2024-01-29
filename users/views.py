@@ -1,9 +1,8 @@
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
-from django.urls import reverse
 
-from users.forms import LoginForm
+from users.forms import LoginForm, RegisterForm
 
 
 def user_login(request):
@@ -18,7 +17,14 @@ def user_login(request):
                 login(request, user)
                 return redirect('index')
             else:
-                return HttpResponse("Invalid Credentials")
+                return render(
+                    request,
+                    "users/login.html",
+                    {
+                        "form": loginForm,
+                        "error_message": "Invalid Credentials. Please try again.",
+                    },
+                )
     else:
         loginForm = LoginForm()
         return render(request, "users/login.html", {"form": loginForm})
@@ -27,3 +33,15 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return render(request, "users/logout.html", {})
+
+
+def user_register(request):
+    if request.method == 'POST':
+        registerForm = RegisterForm(request.POST)
+        if registerForm.is_valid():
+            newUser = registerForm.save(commit=False)
+            newUser.set_password(registerForm.cleaned_data["password"])
+            newUser.save()
+            return render(request, "users/register_done.html", {})
+    registerForm = RegisterForm()
+    return render(request, "users/register.html", {"form": registerForm})

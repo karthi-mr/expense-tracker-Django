@@ -1,0 +1,13 @@
+{% extends "expense/base.html" %}
+
+{% block title %}Logout Page{% endblock title %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="shadow-sm p-4 message w-50 mx-auto text-center">
+        <h1 class="text-danger mb-3">You have registered successfully.</h1>
+        <a href="{% url 'user-login' %}" class="btn btn-success w-25 me-3" role="button">Go to Login</a>
+        <a href="{% url 'home' %}" class="btn btn-dark w-25" role="button">Go to Home</a>
+    </div>
+</div>
+{% endblock body %}
