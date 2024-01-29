@@ -1,0 +1,20 @@
+{% extends "expense/base.html" %}
+{% load static %}
+
+{% block title %}Home{% endblock title %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="text-center mb-3 text-uppercase text-primary opacity-50">Welcome to Expense tracker</h1>
+    <div class="row mt-5">
+        <div class="col-md-5 col-12 mb-md-0 mb-5 shadow-lg p-5 text-center">
+            <img src="{% static 'image/login.png' %}" alt="login-img" class="img-fluid w-75">
+            <button type="button" class="btn btn-outline-dark d-block w-50 mt-3 mx-auto">Login</button>
+        </div>
+        <div class="col-md-5 offset-md-1 col-12 shadow-lg p-5 text-center">
+            <img src="{% static 'image/register.png' %}" alt="login-img" class="img-fluid w-75">
+            <button type="button" class="btn btn-outline-dark d-block w-50 mt-3 mx-auto">Register</button>
+        </div>
+    </div>
+</div>
+{% endblock body %}

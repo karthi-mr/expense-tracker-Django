@@ -8,6 +8,10 @@ from expense.forms import CategoryForm, ExpenseForm
 from expense.models import Category, Expense
 
 
+def home(request):
+    return render(request, "expense/home.html", {})
+
+
 def index(request):
     expenses = Expense.objects.filter(user=request.user).order_by("-edited")
     totalExpenses = expenses.aggregate(Sum("amount"))
