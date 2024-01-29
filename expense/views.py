@@ -4,8 +4,8 @@ from django.db.models import Sum
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 
-from expense.forms import ExpenseForm
-from expense.models import Expense
+from expense.forms import CategoryForm, ExpenseForm
+from expense.models import Category, Expense
 
 
 def index(request):
@@ -42,8 +42,6 @@ def index(request):
         .order_by('category')
         .annotate(sum=Sum('amount'))
     )
-
-    print(categoricalSum)
 
     context = {
         "expenses": expenses,
@@ -84,3 +82,39 @@ def delete_expense(request, expenseId):
         expense.delete()
         return redirect(reverse('index'))
     return render(request, "expense/delete.html", {"expense": expense})
+
+
+def category_index(request):
+    categories = Category.objects.all()
+    return render(request, "expense/category-index.html", {"categories": categories})
+
+
+def add_category(request):
+    if request.method == "POST":
+        categoryForm = CategoryForm(request.POST)
+        if categoryForm.is_valid():
+            categoryForm.save()
+            return redirect(reverse('category-index'))
+    categoryForm = CategoryForm()
+    return render(request, "expense/category-add.html", {"category_form": categoryForm})
+
+
+def edit_category(request, categoryId):
+    category = get_object_or_404(Category, pk=categoryId)
+    if request.method == "POST":
+        categoryForm = CategoryForm(request.POST, instance=category)
+        if categoryForm.is_valid():
+            categoryForm.save()
+            return redirect(reverse('category-index'))
+    categoryForm = CategoryForm(instance=category)
+    return render(
+        request, "expense/category-edit.html", {"category_form": categoryForm}
+    )
+
+
+def delete_category(request, categoryId):
+    category = get_object_or_404(Category, pk=categoryId)
+    if request.method == "POST":
+        category.delete()
+        return redirect(reverse('category-index'))
+    return render(request, "expense/category-delete.html", {"category": category})

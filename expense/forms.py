@@ -1,6 +1,6 @@
 from django import forms
 
-from expense.models import Expense
+from expense.models import Category, Expense
 
 
 class ExpenseForm(forms.ModelForm):
@@ -13,11 +13,23 @@ class ExpenseForm(forms.ModelForm):
         decimal_places=2,
         widget=forms.NumberInput(attrs={"class": "form-control"}),
     )
-    category = forms.CharField(
-        max_length=50,
-        widget=forms.TextInput(attrs={"class": "form-control"}),
+    category = forms.ModelChoiceField(
+        queryset=Category.objects.all(),
+        empty_label="Select Category",
+        widget=forms.Select(attrs={"class": "form-select"}),
     )
 
     class Meta:
         model = Expense
         fields = ("name", "amount", "category")
+
+
+class CategoryForm(forms.ModelForm):
+    name = forms.CharField(
+        max_length=50,
+        widget=forms.TextInput(attrs={"class": "form-control"}),
+    )
+
+    class Meta:
+        model = Category
+        fields = ("name",)

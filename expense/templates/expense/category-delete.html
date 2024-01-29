@@ -1,0 +1,32 @@
+{% extends "expense/base.html" %}
+
+{% block title %}Delete Category{% endblock title %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="text-center mb-3 text-uppercase text-danger opacity-50">Delete Category</h1>
+    <form action="" method="post" class="w-50 mx-auto shadow-lg p-5 delete-expense-form text-center">
+        {% csrf_token %}
+        <p>Are you sure want to delete {{ category.name }} category?</p>
+        <div class="buttons text-center">
+            {% if category.expense_set.count %}
+            <button type="submit" class="btn btn-danger w-25" disabled>
+                Yes, Delete
+            </button>
+            {% else %}
+            <button type="submit" class="btn btn-danger w-25">
+                Yes, Delete
+            </button>
+            {% endif %}
+            <a href="{% url 'category-index' %}" class="btn btn-warning w-25" role="button">Cancel</a>
+        </div>
+        {% if category.expense_set.count %}
+        <span class="text-danger fw-bold opacity-50">
+            An expense with this category exists.
+            <br>
+            Please delete the expense to delete this category.
+        </span>
+        {% endif %}
+    </form>
+</div>
+{% endblock body %}

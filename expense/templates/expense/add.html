@@ -21,6 +21,11 @@
         <div class="mb-3">
             <label for="id_category" class="form-label fw-bold">Expense Category</label>
             {{ expense_form.category }}
+            <span class="">
+                <a href="{% url 'category-index' %}" class="link-primary text-decoration-none">
+                    Manage Category
+                </a>
+            </span>
         </div>
         <button type="submit" class="btn btn-success">Add Expense</button>
         <a href="{% url 'index' %}" class="btn btn-warning" role="button">Cancel</a>

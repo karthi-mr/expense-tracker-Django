@@ -1,0 +1,42 @@
+{% extends "expense/base.html" %}
+{% load static %}
+
+{% block title %}Expense Category{% endblock title %}
+
+{% block body %}
+<div class="manage-category w-50 mx-auto mt-4">
+    <h1 class="mb-3 text-primary">Manage Category</h1>
+    <div class="add-expense my-3">
+        <a href="{% url 'add-category' %}" class="btn btn-primary" role="button">Add Category</a>
+        <a href="{% url 'index' %}" class="btn btn-secondary" role="button">Go to Home</a>
+    </div>
+    <div class="shadow-lg">
+        <table class="table table-responsive text-center table-borderless table-striped table-hover align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for category in categories %}
+                <tr class="item-row p-5">
+                    <td>{{ category.name }}</td>
+                    <td>
+                        <a href="{% url 'edit-category' category.id %}">
+                            <img src="{% static 'image/edit.png' %}" alt="edit" class="expense-action">
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{% url 'delete-category' category.id %}">
+                            <img src="{% static 'image/delete.png' %}" alt="edit" class="expense-action">
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock body %}

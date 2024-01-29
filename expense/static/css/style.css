@@ -16,6 +16,8 @@
 }
 
 .add-expense-form input:focus,
+.add-expense-form .form-select:focus,
+.edit-expense-form .form-select:focus,
 .edit-expense-form input:focus {
   outline: none;
   box-shadow: none;
