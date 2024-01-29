@@ -42,3 +42,7 @@
   font-size: 1.5rem;
   color: purple;
 }
+
+.chart-row .category-expense-sum #expense-category {
+  max-height: 25rem;
+}

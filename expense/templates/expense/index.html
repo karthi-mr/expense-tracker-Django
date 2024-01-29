@@ -76,23 +76,46 @@
     <div class="shadow-lg col p-4 past-30-days">
         <span class="heading d-block p-3 text-center">Past 30 days sum expense</span>
         <hr>
-        <div class="past-30-day-table">
+        <div class="past-30-day-table" id="past-30-day-table">
             {% for daily_sum in daily_sums %}
-            <span class="mb-2 added-on">{{ daily_sum.edited }}</span>
-            <span class="mb-2 added-on-amount">$ {{ daily_sum.sum| floatformat:2| intcomma }}</span>
+            <div>
+                <span class="mb-2 added-on">{{ daily_sum.edited }}</span>
+            </div>
+            <div>
+                <span class="mb-2 added-on-amount">$ {{ daily_sum.sum| floatformat:2| intcomma }}</span>
+            </div>
             {% endfor %}
         </div>
     </div>
     <div class="shadow-lg col p-4 categorical-sum">
         <span class="heading d-block p-3 text-center">Categorical sum expense</span>
         <hr>
-        <div class="categorical-table">
+        <div class="categorical-table" id="categorical-table">
             {% for category_sum in category_sums %}
-            <span class="mb-2 added-on">{{ category_sum.category }}</span>
-            <span class="mb-2 added-on-amount">$ {{ category_sum.sum| floatformat:2| intcomma }}</span>
+            <div>
+                <span class="mb-2 added-on">{{ category_sum.category }}</span>
+            </div>
+            <div>
+                <span class="mb-2 added-on-amount">$ {{ category_sum.sum| floatformat:2| intcomma }}</span>
+            </div>
             {% endfor %}
         </div>
     </div>
 </div>
+
+<!-- charts -->
+<div class="row gap-3 mx-5 mt-3 mb-5 chart-row">
+    <div class="col shadow-lg daily-expense-sum p-3">
+        <h1>Daily expense sum</h1>
+        <canvas id="daily-expense" class=""></canvas>
+    </div>
+    <div class="col shadow-lg category-expense-sum p-3">
+        <h1>Expense accross categories</h1>
+        <canvas id="expense-category" class=""></canvas>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.2/dist/chart.min.js"></script>
+<script src="{% static 'js/chart.js' %}"></script>
 
 {% endblock body %}
