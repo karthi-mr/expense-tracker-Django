@@ -93,7 +93,7 @@
         <div class="categorical-table" id="categorical-table">
             {% for category_sum in category_sums %}
             <div>
-                <span class="mb-2 added-on">{{ category_sum.category }}</span>
+                <span class="mb-2 added-on">{{ category_sum.category__name }}</span>
             </div>
             <div>
                 <span class="mb-2 added-on-amount">$ {{ category_sum.sum| floatformat:2| intcomma }}</span>

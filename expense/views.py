@@ -38,10 +38,12 @@ def index(request):
     # ! calculating categorical sum expenses
     categoricalSum = (
         Expense.objects.all()
-        .values('category')
+        .values('category__name')
         .order_by('category')
         .annotate(sum=Sum('amount'))
     )
+
+    print(categoricalSum)
 
     context = {
         "expenses": expenses,
