@@ -1,7 +1,9 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 
 class Category(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
 
     class Meta:
@@ -12,6 +14,7 @@ class Category(models.Model):
 
 
 class Expense(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     category = models.ForeignKey(Category, on_delete=models.PROTECT)

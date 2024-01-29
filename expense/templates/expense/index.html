@@ -5,6 +5,7 @@
 {% block title %}Expense Tracker{% endblock title %}
 
 {% block body %}
+<h1>Welcome, {{ user }}</h1>
 <div class="add-expense mx-5 my-3">
     <a href="{% url 'add-expense' %}" class="btn btn-primary" role="button">Add Expense</a>
     <a href="{% url 'category-index' %}" class="btn btn-dark" role="button">Manage Category</a>

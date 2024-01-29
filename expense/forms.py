@@ -1,4 +1,5 @@
 from django import forms
+from django.db.models import Q
 
 from expense.models import Category, Expense
 
@@ -22,6 +23,12 @@ class ExpenseForm(forms.ModelForm):
     class Meta:
         model = Expense
         fields = ("name", "amount", "category")
+
+    def __init__(self, user, *args, **kwargs):
+        super(ExpenseForm, self).__init__(*args, **kwargs)
+        self.fields["category"].queryset = Category.objects.filter(
+            Q(user=user) | Q(user__id=1)
+        )
 
 
 class CategoryForm(forms.ModelForm):
