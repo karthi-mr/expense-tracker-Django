@@ -55,7 +55,7 @@ console.log(dailySumDiv);
 const dates = [];
 const dailySums = [];
 
-for (let i = 0; i < dailySumDiv.length; i++) {
+for (let i = dailySumDiv.length - 1; i >= 0; i--) {
   if (i % 2 == 0) {
     dates.push(dailySumDiv[i].innerText);
   } else {

@@ -29,9 +29,9 @@ def index(request):
 
     # ! calculating past 30 days sum expenses
     dailySum = (
-        Expense.objects.filter(edited__gt=lastMonth)
-        .values('edited')
-        .order_by('-edited')
+        Expense.objects.filter(added__gt=lastMonth)
+        .values('added')
+        .order_by('-added')
         .annotate(sum=Sum('amount'))
     )
 
