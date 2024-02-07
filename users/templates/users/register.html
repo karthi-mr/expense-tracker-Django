@@ -5,9 +5,11 @@
 {% block body %}
 <div class="container mt-5">
     <h1 class="text-uppercase mb-3 text-center text-primary opacity-50">Welcome to our expense tracker site</h1>
+    {% if error_message %}
     <div class="alert alert-danger">
-        <p class="fw-bold">Invalid Password</p>
+        <p class="fw-bold"></p>
     </div>
+    {% endif %}
     <form action="" method="post" class="w-50 mx-auto shadow-lg px-5 pt-4 pb-2 add-expense-form">
         {% csrf_token %}
         <!-- first_name -->
