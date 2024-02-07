@@ -9,6 +9,10 @@ from expense.forms import CategoryForm, ExpenseForm
 from expense.models import Category, Expense
 
 
+def empty_page(request):
+    return redirect('home')
+
+
 def home(request):
     if request.user.is_authenticated:
         return redirect(reverse('index'))
@@ -136,4 +140,5 @@ def delete_category(request, categoryId):
     if request.method == "POST":
         category.delete()
         return redirect(reverse('category-index'))
+    return render(request, "expense/category-delete.html", {"category": category})
     return render(request, "expense/category-delete.html", {"category": category})
