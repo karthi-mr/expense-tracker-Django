@@ -3,6 +3,7 @@ from django.urls import path
 from expense import views
 
 urlpatterns = [
+    path('', views.empty_page, name='empty'),
     path('home/', views.home, name='home'),
     path('expense/', views.index, name='index'),
     path('expense/add/', views.add_expense, name='add-expense'),
